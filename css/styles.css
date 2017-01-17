@@ -1,0 +1,42 @@
+body{
+    margin: 0 auto;
+}
+ul{
+    list-style-type: none;
+    margin: 0 auto;
+    padding: 0;
+    overflow: hidden;
+    background-color: gray;
+}
+li{
+    float: left;
+    display: block;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    font-family: "Tahoma", Tahoma, serif;
+}
+li a{
+    padding: 14px 24px;
+    display: block;
+}
+li.active {
+    background-color: darkgray;
+}
+li a:link, li a:visited{
+    color: white;
+    font-style: normal;
+    text-decoration: none;
+}
+h1 {
+    font-family: "Cambria", Cambria, serif;
+    text-align: center;
+}
+table {
+    border-collapse: collapse;
+    width: 100%;
+    font-family: "Cambria", Cambria, serif;
+}
+th, td {
+    border: 1px solid black;
+}
