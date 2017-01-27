@@ -55,8 +55,14 @@ form {
 label {
     margin: 1%;
     display: inline-block;
-    font-family: "Cambria", Cambria, serif;
+    font-family: "Helvetica", Helvetica, serif;
 }
-button {
+button :not(.add) {
     margin: 1%;
+}
+.add {
+    margin: 0 auto;
+    margin-top: 10px;
+    display: block;
+    text-align: center;
 }
