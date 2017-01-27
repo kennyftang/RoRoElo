@@ -1,4 +1,9 @@
 <?php
+//TODO: Make the button to add players work
+//TODO: Add a way to input a win
+//TODO: Calculate the change in elo
+//TODO: Show the ELO lost or won
+//TODO: Update ranks based on ELO
 //Start session
 if (!isset($_SESSION['user']))
     session_start();

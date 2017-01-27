@@ -7,5 +7,11 @@
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
       <jdbc-url>jdbc:sqlite:F:/xampp/htdocs/phpstorm/db/rrtt.sqlite</jdbc-url>
     </data-source>
+    <data-source source="LOCAL" name="rrtt.sqlite" uuid="92f6da90-d14e-4d34-b7e5-e06560b24644">
+      <driver-ref>sqlite.xerial</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
+      <jdbc-url>jdbc:sqlite:$PROJECT_DIR$/db/rrtt.sqlite</jdbc-url>
+    </data-source>
   </component>
 </project>
