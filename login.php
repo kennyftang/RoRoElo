@@ -3,16 +3,16 @@ if (!isset($_SESSION['user']))
     session_start();
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang='en'>
 <head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="css/styles.css"/>
+    <meta charset='UTF-8'>
+    <link rel='stylesheet' href='css/styles.css'/>
     <title>Round Rock Rankings</title>
 </head>
 <body>
 <ul>
-    <li><a href="index.php">Rankings</a></li>
-    <li class="active"><a href="/">Login</a></li>
+    <li><a href='index.php'>Rankings</a></li>
+    <li class='active'><a href=''>Login</a></li>
 </ul>
 <?php
 //Check Session
@@ -51,6 +51,7 @@ else {
 //Setup the PDO
 $dsn = "sqlite:" . __DIR__ . "/db/rrtt.sqlite";
 $pdo = new PDO($dsn);
+$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
 //Check if the user is registering using the secret key
 if (preg_match("/^RRHStabletennis107:.*/", $username)) {
     //Check if the user is already registered

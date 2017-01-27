@@ -35,6 +35,8 @@ h1 {
 table {
     border-collapse: collapse;
     width: auto;
+    height: auto;
+    vertical-align: middle;
     margin-left: auto;
     margin-right: auto;
     font-family: "Cambria", Cambria, serif;
@@ -65,4 +67,9 @@ button :not(.add) {
     margin-top: 10px;
     display: block;
     text-align: center;
+}
+td input {
+    box-sizing: border-box;
+    font-size: 20pt;
+    font-family: "Cambria", Cambria, serif;
 }
