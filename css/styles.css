@@ -1,4 +1,4 @@
-body{
+body {
     margin: 0 auto;
 }
 ul{
@@ -29,14 +29,34 @@ li a:link, li a:visited{
     text-decoration: none;
 }
 h1 {
-    font-family: "Cambria", Cambria, serif;
+    font-family: "Helvetica", Helvetica, serif;
     text-align: center;
 }
 table {
     border-collapse: collapse;
-    width: 100%;
+    width: auto;
+    margin-left: auto;
+    margin-right: auto;
     font-family: "Cambria", Cambria, serif;
+    font-size: 20pt;
 }
 th, td {
     border: 1px solid black;
+    padding: 5px;
+}
+img {
+    display: block;
+    margin: auto;
+}
+form {
+    text-align: center;
+    margin-top: 5%;
+}
+label {
+    margin: 1%;
+    display: inline-block;
+    font-family: "Cambria", Cambria, serif;
+}
+button {
+    margin: 1%;
 }
