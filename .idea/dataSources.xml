@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="rrtt.sqlite" uuid="c8f662d9-9eb8-4b48-8228-9ef9d2297e25">
+    <data-source source="LOCAL" name="rrtt.sqlite [2]" uuid="2d1faefa-e0f6-4847-bd79-28007ff92480">
       <driver-ref>sqlite.xerial</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
-      <jdbc-url>jdbc:sqlite:$PROJECT_DIR$/db/rrtt.sqlite</jdbc-url>
+      <jdbc-url>jdbc:sqlite:F:/xampp/htdocs/phpstorm/db/rrtt.sqlite</jdbc-url>
     </data-source>
   </component>
 </project>
