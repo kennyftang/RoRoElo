@@ -12,5 +12,10 @@ function addPlayer() {
     newRow.appendChild(tdInput);
     newRow.appendChild(document.createElement("td"));
     newRow.appendChild(document.createElement("td"));
+    newRow.setAttribute("id", "newplayer")
     document.getElementsByTagName("tbody").item(0).appendChild(newRow);
+    var newPlayerForm = document.createElement("form");
+    newPlayerForm.setAttribute("method", "post");
+    //TODO: Wrap this button around a form to POST the name
+    document.getElementsByTagName("button")[0].removeAttribute("onclick");
 }
