@@ -26,6 +26,10 @@ if (isset($_SESSION['user'])) {
     } else
         $_SESSION['lastactivity'] = time();
 }
+//A value_compare_func for usort
+function sortByElo($a, $b) {
+    return $b['elo'] - $a['elo'];
+}
 ?>
 <!DOCTYPE html>
 <html lang='en'>
@@ -37,9 +41,7 @@ if (isset($_SESSION['user'])) {
 </head>
 <body>
 <ul>
-    <li class='active'><a
-                href=''><?php echo isset($_SESSION['user']) ? "Rankings (logged in as " . $_SESSION['user'] . ")" : "Rankings" ?></a>
-    </li>
+    <li class='active'><a href=''><?php echo isset($_SESSION['user']) ? "Rankings (logged in as " . $_SESSION['user'] . ")" : "Rankings" ?></a></li>
     <?php echo isset($_SESSION['user']) ? "<li class='signout'><a href='signout.php'>Sign Out</a></li>" : "<li><a href='login.php'>Login</a></li>\r\n" ?>
 </ul>
 <?php
@@ -52,12 +54,13 @@ printQueue();
         <th>Name</th>
         <th>Elo</th>
         <th>Change</th>
-        <?php echo isset($_SESSION['user']) ? "<th>Match</th>\r\n" : "" ?>
+<?php echo isset($_SESSION['user']) ? "<th>Match</th>\r\n" : "" ?>
     </tr>
     <?php
     //Setting up the PDO
     $dsn = "sqlite:" . __DIR__ . "/db/rrtt.sqlite";
     $pdo = new PDO($dsn);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
     //Count how many players there are currently
     $countstmt = $pdo->prepare("SELECT COUNT(*) FROM players");
     $countstmt->execute();
@@ -65,13 +68,19 @@ printQueue();
     //Get every player into an array
     $playerstmt = $pdo->prepare("SELECT * FROM players");
     $playerstmt->execute();
+    $players = array(array());
     //Loop through each player
     for ($i = 0; $i < $count; $i++) {
-        $player = $playerstmt->fetch();
+	    $player = $playerstmt->fetch();
+	    $players[$i] = array("change" => $player['change'], "name" => $player['name'], "elo" => $player['elo']);
+    }
+    usort($players, "sortByElo");
+    for ($i = 0; $i < count($players); $i++) {
+        $player = $players[$i];
         //Getting the correct change arrow
-        $img = $player['change'] ? "res/inc.png" : "res/dec.png";
+        $img = $player["change"] ? "res/inc.png" : "res/dec.png";
         echo("<tr>
-        <td>" . $player["rank"] . "</td>
+        <td>" . ($i + 1) . "</td>
         <td>" . $player["name"] . "</td>
         <td>" . $player["elo"] . "</td>
         <td><img src='$img'/></td>");
