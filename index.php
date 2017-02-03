@@ -54,13 +54,18 @@ printQueue();
         <th>Name</th>
         <th>Elo</th>
         <th>Change</th>
-<?php echo isset($_SESSION['user']) ? "<th>Match</th>\r\n" : "" ?>
     </tr>
     <?php
     //Setting up the PDO
     $dsn = "sqlite:" . __DIR__ . "/db/rrtt.sqlite";
     $pdo = new PDO($dsn);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
+    //Add player if user submitted a new player
+    if(isset($_POST['name'])) {
+	    $name = $_POST['name'];
+	    $addplayerstmt = $pdo->prepare("INSERT INTO players (name) VALUES (?)");
+	    $addplayerstmt->execute(array($name));
+    }
     //Count how many players there are currently
     $countstmt = $pdo->prepare("SELECT COUNT(*) FROM players");
     $countstmt->execute();
@@ -78,12 +83,16 @@ printQueue();
     for ($i = 0; $i < count($players); $i++) {
         $player = $players[$i];
         //Getting the correct change arrow
-        $img = $player["change"] ? "res/inc.png" : "res/dec.png";
+        if($player["change"] !== null) {
+	        $img = $player["change"] ? "res/inc.png" : "res/dec.png";
+	        $changehtml = "<td><img src='$img'/></td>";
+        } else
+            $changehtml = "<td><p class='dash'>-</p></td>";
         echo("<tr>
         <td>" . ($i + 1) . "</td>
         <td>" . $player["name"] . "</td>
         <td>" . $player["elo"] . "</td>
-        <td><img src='$img'/></td>");
+        $changehtml");
         //Make sure we don't add extra spaces
         if ($i !== $count - 1)
             echo("
@@ -97,5 +106,25 @@ printQueue();
     ?>
 </table>
 <?php echo isset($_SESSION['user']) ? "<button class='add' onclick='addPlayer()'>Add Player</button>\r\n" : ""; ?>
+<?php
+if(isset($_SESSION['user'])) {
+	echo("
+<form class='play'>
+    <select>");
+	for($i = 0; $i < count($players); $i++)
+		echo("
+        <option>{$players[$i]["name"]}</option>");
+	echo("
+    </select>
+    <p> beat </p>
+    <select>");
+	for($i = 0; $i < count($players); $i++)
+		echo("
+        <option>{$players[$i]["name"]}</option>");
+	echo("
+    </select>
+</form>");
+}
+?>
 </body>
 </html>

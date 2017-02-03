@@ -28,7 +28,7 @@ if (isset($_SESSION['user'])) {
 //Prints the login form
 function printLoginForm()
 {
-    echo("<form method='post'>
+    echo("<form method='post' class='loginform'>
     <label>Username</label></br><input name='username' type='text' id='username'></br>
     <label>Password</label></br><input name='password' type='password' id='password'></br>
     <button type='submit'>Submit</button></br>

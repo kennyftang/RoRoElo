@@ -50,10 +50,6 @@ img {
     display: block;
     margin: auto;
 }
-form {
-    text-align: center;
-    margin-top: 5%;
-}
 label {
     margin: 1%;
     display: inline-block;
@@ -68,8 +64,29 @@ button :not(.add) {
     display: block;
     text-align: center;
 }
+td button {
+    font-size: 10pt;
+    vertical-align: inherit;
+    width: 100%;
+}
 td input {
     box-sizing: border-box;
     font-size: 20pt;
     font-family: "Cambria", Cambria, serif;
+}
+.dash {
+    font-size: 30pt;
+    margin: 0;
+    text-align: center;
+}
+.play {
+    text-align: center;
+    margin: 1%;
+}
+.loginform {
+    margin-top: 5%;
+    text-align: center;
+}
+p {
+    display: inline;
 }
