@@ -38,3 +38,10 @@ function addPlayer() {
     var button = document.getElementsByClassName("add")[0];
     button.parentNode.removeChild(button);
 }
+function removePlayer() {
+    var person = window.prompt("Rank #");
+    var removeButton = document.getElementsByClassName("remove").item(0);
+    removeButton.setAttribute("name", "removerank");
+    removeButton.setAttribute("value", person);
+    removeButton.setAttribute("type", "submit");
+}

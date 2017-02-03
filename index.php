@@ -63,15 +63,35 @@ printQueue();
     //Add player if user submitted a new player
     if(isset($_POST['name'])) {
 	    $name = $_POST['name'];
-	    $addplayerstmt = $pdo->prepare("INSERT INTO players (name) VALUES (?)");
+	    $addplayerstmt = $pdo->prepare("INSERT INTO `players` (`name`) VALUES (?)");
 	    $addplayerstmt->execute(array($name));
     }
+    if(isset($_POST['winner']) && isset($_POST['loser'])) {
+        $winner = $_POST['winner'];
+        $loser = $_POST['loser'];
+        if($winner !== $loser) {
+	        $eloStmt = $pdo->prepare("SELECT `elo` FROM `players` WHERE `name` LIKE(?)");
+	        $eloStmt->execute(array($winner));
+	        $winnerElo = $eloStmt->fetch()['elo'];
+	        $eloStmt->execute(array($loser));
+	        $loserElo = $eloStmt->fetch()['elo'];
+	        $changeElo = (int)round(32 * (1 - 1 / (1 + pow(10, ($loserElo - $winnerElo) / 400))));
+	        $winnerElo += $changeElo;
+	        $loserElo -= $changeElo;
+	        $updateEloStmt = $pdo->prepare("UPDATE `players` SET `elo` = ? WHERE `name` LIKE(?)");
+	        $updateEloStmt->execute(array($winnerElo, $winner));
+	        $updateEloStmt->execute(array($loserElo, $loser));
+	        $updateChangeStmt = $pdo->prepare("UPDATE `players` SET `change` = ? WHERE `name` LIKE(?)");
+	        $updateChangeStmt->execute(array(true, $winner));
+	        $updateChangeStmt->execute(array(false, $loser));
+        }
+    }
     //Count how many players there are currently
-    $countstmt = $pdo->prepare("SELECT COUNT(*) FROM players");
+    $countstmt = $pdo->prepare("SELECT COUNT(*) FROM `players`");
     $countstmt->execute();
     $count = $countstmt->fetch()[0];
     //Get every player into an array
-    $playerstmt = $pdo->prepare("SELECT * FROM players");
+    $playerstmt = $pdo->prepare("SELECT * FROM `players`");
     $playerstmt->execute();
     $players = array(array());
     //Loop through each player
@@ -79,7 +99,9 @@ printQueue();
 	    $player = $playerstmt->fetch();
 	    $players[$i] = array("change" => $player['change'], "name" => $player['name'], "elo" => $player['elo']);
     }
+    //Sort by elo
     usort($players, "sortByElo");
+    //Print out the table of players
     for ($i = 0; $i < count($players); $i++) {
         $player = $players[$i];
         //Getting the correct change arrow
@@ -105,25 +127,44 @@ printQueue();
     }
     ?>
 </table>
-<?php echo isset($_SESSION['user']) ? "<button class='add' onclick='addPlayer()'>Add Player</button>\r\n" : ""; ?>
+<?php echo isset($_SESSION['user']) ? "<button class='add' onclick='addPlayer()'>Add Player</button>" : ""; ?>
+<?php echo isset($_SESSION['user']) ? "<form method='post'><button class='remove' onclick='removePlayer()'>Remove Player</button></form>" : ""; ?>
 <?php
 if(isset($_SESSION['user'])) {
 	echo("
-<form class='play'>
-    <select>");
+<form class='play' method='post'>
+    <select name='winner'>
+        <option></option>");
 	for($i = 0; $i < count($players); $i++)
 		echo("
         <option>{$players[$i]["name"]}</option>");
 	echo("
     </select>
-    <p> beat </p>
-    <select>");
+    <p> won against </p>
+    <select name='loser'>
+        <option></option>");
 	for($i = 0; $i < count($players); $i++)
 		echo("
         <option>{$players[$i]["name"]}</option>");
 	echo("
     </select>
-</form>");
+    <button type='submit'>Submit</button>
+</form>
+");
+}
+if(isset($invalidRank))
+    if($invalidRank)
+	    echo("<p>Invalid Player</p>");
+if(isset($_POST['removerank'])) {
+    $remove = $_POST['removerank'];
+    if(!is_numeric($remove))
+        $invalidRank = true;
+    else {
+        $remove = $players[$remove - 1]["name"];
+        $removeStmt = $pdo->prepare("DELETE FROM `players` WHERE `name` LIKE(?)");
+        $invalidRank = !$removeStmt->execute(array($remove));
+    }
+    echo("<script>window.location.href = window.location.href;</script>");
 }
 ?>
 </body>

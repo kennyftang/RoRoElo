@@ -62,7 +62,7 @@ if (preg_match("/^RRHStabletennis107:.*/", $username)) {
     $username = explode(":", $username, 2)[1];
     if ($check == 0) {
         //Add the user
-        $registerstmt = $pdo->prepare("INSERT INTO logins (username,password) VALUES(?, ?)");
+        $registerstmt = $pdo->prepare("INSERT INTO `logins` (`username`,`password`) VALUES(?, ?)");
         $hashed = password_hash($password, PASSWORD_DEFAULT);
         $registerstmt->execute(array($username, $hashed));
         echo("<p>User $username has been added!</p>\r\n");

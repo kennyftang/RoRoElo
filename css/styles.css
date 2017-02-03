@@ -58,7 +58,7 @@ label {
 button :not(.add) {
     margin: 1%;
 }
-.add {
+.add, .remove {
     margin: 0 auto;
     margin-top: 10px;
     display: block;
@@ -87,6 +87,6 @@ td input {
     margin-top: 5%;
     text-align: center;
 }
-p {
+form.play p {
     display: inline;
 }
