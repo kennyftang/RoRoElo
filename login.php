@@ -1,4 +1,5 @@
 <?php
+//Start session if not already started
 if (!isset($_SESSION['user']))
     session_start();
 ?>
@@ -12,10 +13,11 @@ if (!isset($_SESSION['user']))
 <body>
 <ul>
     <li><a href='index.php'>Rankings</a></li>
+    <li><a href='log.php'>Log</a></li>
     <li class='active'><a href=''>Login</a></li>
 </ul>
 <?php
-//Check Session
+//Check if session has expired, 20 minute timeout
 if (isset($_SESSION['user'])) {
     if (time() - $_SESSION['lastactivity'] > 1200) {
         echo("    <p>Your session has expired</p>
