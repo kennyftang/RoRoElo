@@ -80,6 +80,7 @@ if (password_verify($password, $login["password"])) {
     session_start();
     $_SESSION['user'] = $username;
     $_SESSION['lastactivity'] = time();
+    echo("<script>window.location.href='index.php'</script>");
     header("Location: index.php");
 } else
     echo("<p>Username or Password is incorrect</p>\r\n");
